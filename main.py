@@ -1,16 +1,30 @@
-# This is a sample Python script.
-
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+import sys
+import socket
+from PySide2.QtWidgets import QApplication, QMainWindow, QLabel
 
 
-# Press the green button in the gutter to run the script.
+def check_internet():
+    try:
+        # Tenta se conectar com o servidor do Google
+        socket.create_connection(("www.google.com", 80))
+        return 0
+    except OSError:
+        return 1
+
+
+class JanelaPrincipal(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Cadê minha internet?")
+        self.label = QLabel("Olá mundo")
+        self.setCentralWidget(self.label)
+        self.setGeometry(100, 100, 500, 500)  # Define o tamanho da janela
+        self.setFixedSize(500, 500) # Fixa o tamanho da janela
+        status_internet = self.check_internet()
+
+
 if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    app = QApplication(sys.argv)
+    windows = JanelaPrincipal()
+    windows.show()
+    sys.exit(app.exec_())
