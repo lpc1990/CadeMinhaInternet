@@ -17,7 +17,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(718, 526)
+        MainWindow.resize(372, 542)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.fr_status_da_internet = QFrame(self.centralwidget)
@@ -36,7 +36,7 @@ class Ui_MainWindow(object):
 
         self.img_status_da_internet = QLabel(self.fr_status_da_internet)
         self.img_status_da_internet.setObjectName(u"img_status_da_internet")
-        self.img_status_da_internet.setPixmap(QPixmap(u"images/sinal_verde.png"))
+        self.img_status_da_internet.setPixmap(QPixmap(u"images/sinal_amarelo.png"))
         self.img_status_da_internet.setAlignment(Qt.AlignCenter)
 
         self.verticalLayout.addWidget(self.img_status_da_internet)
@@ -51,15 +51,16 @@ class Ui_MainWindow(object):
 
         self.btn_monitora_internet = QPushButton(self.fr_status_da_internet)
         self.btn_monitora_internet.setObjectName(u"btn_monitora_internet")
+        self.btn_monitora_internet.setEnabled(False)
 
         self.verticalLayout_3.addWidget(self.btn_monitora_internet)
 
-        self.label_2 = QLabel(self.centralwidget)
-        self.label_2.setObjectName(u"label_2")
-        self.label_2.setGeometry(QRect(10, 160, 341, 51))
+        self.lb_teste_de_velocidade = QLabel(self.centralwidget)
+        self.lb_teste_de_velocidade.setObjectName(u"lb_teste_de_velocidade")
+        self.lb_teste_de_velocidade.setGeometry(QRect(10, 160, 341, 51))
         self.layoutWidget = QWidget(self.centralwidget)
         self.layoutWidget.setObjectName(u"layoutWidget")
-        self.layoutWidget.setGeometry(QRect(10, 230, 311, 27))
+        self.layoutWidget.setGeometry(QRect(40, 230, 311, 27))
         self.horizontalLayout_8 = QHBoxLayout(self.layoutWidget)
         self.horizontalLayout_8.setObjectName(u"horizontalLayout_8")
         self.horizontalLayout_8.setContentsMargins(0, 0, 0, 0)
@@ -77,6 +78,7 @@ class Ui_MainWindow(object):
 
         self.btn_selecionar_servidor = QPushButton(self.layoutWidget)
         self.btn_selecionar_servidor.setObjectName(u"btn_selecionar_servidor")
+        self.btn_selecionar_servidor.setEnabled(False)
 
         self.horizontalLayout_2.addWidget(self.btn_selecionar_servidor)
 
@@ -102,11 +104,13 @@ class Ui_MainWindow(object):
 
         self.cb_servidores = QComboBox(self.layoutWidget1)
         self.cb_servidores.setObjectName(u"cb_servidores")
+        self.cb_servidores.setEnabled(False)
 
         self.horizontalLayout_9.addWidget(self.cb_servidores)
 
         self.btn_testar_internet_servidor_selecionado = QPushButton(self.layoutWidget1)
         self.btn_testar_internet_servidor_selecionado.setObjectName(u"btn_testar_internet_servidor_selecionado")
+        self.btn_testar_internet_servidor_selecionado.setEnabled(False)
         self.btn_testar_internet_servidor_selecionado.setMinimumSize(QSize(0, 0))
         self.btn_testar_internet_servidor_selecionado.setMaximumSize(QSize(50, 16777215))
 
@@ -120,7 +124,7 @@ class Ui_MainWindow(object):
 
         self.layoutWidget2 = QWidget(self.centralwidget)
         self.layoutWidget2.setObjectName(u"layoutWidget2")
-        self.layoutWidget2.setGeometry(QRect(0, 290, 361, 151))
+        self.layoutWidget2.setGeometry(QRect(0, 350, 361, 136))
         self.horizontalLayout_10 = QHBoxLayout(self.layoutWidget2)
         self.horizontalLayout_10.setObjectName(u"horizontalLayout_10")
         self.horizontalLayout_10.setContentsMargins(0, 0, 0, 0)
@@ -134,97 +138,89 @@ class Ui_MainWindow(object):
         self.frame.setObjectName(u"frame")
         self.frame.setFrameShape(QFrame.StyledPanel)
         self.frame.setFrameShadow(QFrame.Raised)
-        self.layoutWidget3 = QWidget(self.frame)
-        self.layoutWidget3.setObjectName(u"layoutWidget3")
-        self.layoutWidget3.setGeometry(QRect(20, 10, 321, 136))
-        self.verticalLayout_2 = QVBoxLayout(self.layoutWidget3)
+        self.verticalLayout_2 = QVBoxLayout(self.frame)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
-        self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout = QHBoxLayout()
+        self.horizontalLayout.setObjectName(u"horizontalLayout")
+        self.lb_download_nome = QLabel(self.frame)
+        self.lb_download_nome.setObjectName(u"lb_download_nome")
+        self.lb_download_nome.setMaximumSize(QSize(90, 16777215))
+
+        self.horizontalLayout.addWidget(self.lb_download_nome)
+
+        self.lb_download_velocidade = QLabel(self.frame)
+        self.lb_download_velocidade.setObjectName(u"lb_download_velocidade")
+        self.lb_download_velocidade.setMaximumSize(QSize(400, 16777215))
+
+        self.horizontalLayout.addWidget(self.lb_download_velocidade)
+
+
+        self.verticalLayout_2.addLayout(self.horizontalLayout)
+
         self.horizontalLayout_3 = QHBoxLayout()
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
-        self.lb_download = QLabel(self.layoutWidget3)
-        self.lb_download.setObjectName(u"lb_download")
+        self.lb_upload_nome = QLabel(self.frame)
+        self.lb_upload_nome.setObjectName(u"lb_upload_nome")
+        self.lb_upload_nome.setMaximumSize(QSize(90, 16777215))
+        self.lb_upload_nome.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
 
-        self.horizontalLayout_3.addWidget(self.lb_download)
+        self.horizontalLayout_3.addWidget(self.lb_upload_nome)
 
-        self.text_download = QLineEdit(self.layoutWidget3)
-        self.text_download.setObjectName(u"text_download")
-        self.text_download.setMaximumSize(QSize(240, 16777215))
-        self.text_download.setReadOnly(True)
+        self.lb_upload_velocidade = QLabel(self.frame)
+        self.lb_upload_velocidade.setObjectName(u"lb_upload_velocidade")
 
-        self.horizontalLayout_3.addWidget(self.text_download)
+        self.horizontalLayout_3.addWidget(self.lb_upload_velocidade)
 
 
         self.verticalLayout_2.addLayout(self.horizontalLayout_3)
 
         self.horizontalLayout_4 = QHBoxLayout()
         self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
-        self.lb_download_2 = QLabel(self.layoutWidget3)
-        self.lb_download_2.setObjectName(u"lb_download_2")
-        self.lb_download_2.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
+        self.lb_ping_nome = QLabel(self.frame)
+        self.lb_ping_nome.setObjectName(u"lb_ping_nome")
+        self.lb_ping_nome.setMaximumSize(QSize(90, 16777215))
 
-        self.horizontalLayout_4.addWidget(self.lb_download_2)
+        self.horizontalLayout_4.addWidget(self.lb_ping_nome)
 
-        self.text_upload = QLineEdit(self.layoutWidget3)
-        self.text_upload.setObjectName(u"text_upload")
-        self.text_upload.setMaximumSize(QSize(240, 16777215))
-        self.text_upload.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
-        self.text_upload.setReadOnly(True)
+        self.lb_ping_velocidade = QLabel(self.frame)
+        self.lb_ping_velocidade.setObjectName(u"lb_ping_velocidade")
 
-        self.horizontalLayout_4.addWidget(self.text_upload)
+        self.horizontalLayout_4.addWidget(self.lb_ping_velocidade)
 
 
         self.verticalLayout_2.addLayout(self.horizontalLayout_4)
 
         self.horizontalLayout_5 = QHBoxLayout()
         self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
-        self.lb_download_3 = QLabel(self.layoutWidget3)
-        self.lb_download_3.setObjectName(u"lb_download_3")
+        self.lb_servidor_nome = QLabel(self.frame)
+        self.lb_servidor_nome.setObjectName(u"lb_servidor_nome")
+        self.lb_servidor_nome.setMaximumSize(QSize(90, 16777215))
 
-        self.horizontalLayout_5.addWidget(self.lb_download_3)
+        self.horizontalLayout_5.addWidget(self.lb_servidor_nome)
 
-        self.text_ping = QLineEdit(self.layoutWidget3)
-        self.text_ping.setObjectName(u"text_ping")
-        self.text_ping.setMaximumSize(QSize(240, 16777215))
-        self.text_ping.setReadOnly(True)
+        self.lb_servidor_velocidade = QLabel(self.frame)
+        self.lb_servidor_velocidade.setObjectName(u"lb_servidor_velocidade")
 
-        self.horizontalLayout_5.addWidget(self.text_ping)
+        self.horizontalLayout_5.addWidget(self.lb_servidor_velocidade)
 
 
         self.verticalLayout_2.addLayout(self.horizontalLayout_5)
 
         self.horizontalLayout_6 = QHBoxLayout()
         self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
-        self.lb_download_4 = QLabel(self.layoutWidget3)
-        self.lb_download_4.setObjectName(u"lb_download_4")
+        self.lb_operadora_nome = QLabel(self.frame)
+        self.lb_operadora_nome.setObjectName(u"lb_operadora_nome")
+        self.lb_operadora_nome.setMaximumSize(QSize(90, 16777215))
 
-        self.horizontalLayout_6.addWidget(self.lb_download_4)
+        self.horizontalLayout_6.addWidget(self.lb_operadora_nome)
 
-        self.text_servidor = QLineEdit(self.layoutWidget3)
-        self.text_servidor.setObjectName(u"text_servidor")
-        self.text_servidor.setMaximumSize(QSize(240, 16777215))
-        self.text_servidor.setReadOnly(True)
+        self.lb_operadora_velocidade = QLabel(self.frame)
+        self.lb_operadora_velocidade.setObjectName(u"lb_operadora_velocidade")
 
-        self.horizontalLayout_6.addWidget(self.text_servidor)
+        self.horizontalLayout_6.addWidget(self.lb_operadora_velocidade)
 
 
         self.verticalLayout_2.addLayout(self.horizontalLayout_6)
-
-        self.horizontalLayout_7 = QHBoxLayout()
-        self.horizontalLayout_7.setObjectName(u"horizontalLayout_7")
-        self.lb_download_5 = QLabel(self.layoutWidget3)
-        self.lb_download_5.setObjectName(u"lb_download_5")
-
-        self.horizontalLayout_7.addWidget(self.lb_download_5)
-
-        self.text_operadora = QLineEdit(self.layoutWidget3)
-        self.text_operadora.setObjectName(u"text_operadora")
-        self.text_operadora.setMaximumSize(QSize(240, 16777215))
-
-        self.horizontalLayout_7.addWidget(self.text_operadora)
-
-
-        self.verticalLayout_2.addLayout(self.horizontalLayout_7)
 
 
         self.horizontalLayout_10.addWidget(self.frame)
@@ -234,6 +230,23 @@ class Ui_MainWindow(object):
         self.label_8.setMaximumSize(QSize(2, 16777215))
 
         self.horizontalLayout_10.addWidget(self.label_8)
+
+        self.widget = QWidget(self.centralwidget)
+        self.widget.setObjectName(u"widget")
+        self.widget.setGeometry(QRect(20, 300, 341, 31))
+        self.horizontalLayout_7 = QHBoxLayout(self.widget)
+        self.horizontalLayout_7.setObjectName(u"horizontalLayout_7")
+        self.horizontalLayout_7.setContentsMargins(0, 0, 0, 0)
+        self.label = QLabel(self.widget)
+        self.label.setObjectName(u"label")
+
+        self.horizontalLayout_7.addWidget(self.label)
+
+        self.lb_teste_de_velocidade_loading = QLabel(self.widget)
+        self.lb_teste_de_velocidade_loading.setObjectName(u"lb_teste_de_velocidade_loading")
+        self.lb_teste_de_velocidade_loading.setMinimumSize(QSize(250, 0))
+
+        self.horizontalLayout_7.addWidget(self.lb_teste_de_velocidade_loading)
 
         MainWindow.setCentralWidget(self.centralwidget)
 
@@ -246,9 +259,9 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
         self.lb_status_da_internet.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:18pt; font-weight:600;\">Status da internet</span></p></body></html>", None))
         self.img_status_da_internet.setText("")
-        self.lb_online_offline.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:14pt; font-weight:600;\">Online</span></p></body></html>", None))
+        self.lb_online_offline.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:14pt; font-weight:600;\">Testando</span></p></body></html>", None))
         self.btn_monitora_internet.setText(QCoreApplication.translate("MainWindow", u"Monitorar Internet", None))
-        self.label_2.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:24pt; font-weight:600;\">Teste de Velocidade</span></p></body></html>", None))
+        self.lb_teste_de_velocidade.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:24pt; font-weight:600;\">Teste de Velocidade</span></p></body></html>", None))
         self.label_3.setText("")
         self.lb_escolher_servidor.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:10pt; font-weight:600;\">Escolher Servidor?</span></p></body></html>", None))
         self.btn_selecionar_servidor.setText(QCoreApplication.translate("MainWindow", u"Selecionar", None))
@@ -257,11 +270,18 @@ class Ui_MainWindow(object):
         self.btn_testar_internet_servidor_selecionado.setText(QCoreApplication.translate("MainWindow", u"Testar", None))
         self.label_6.setText("")
         self.label_7.setText("")
-        self.lb_download.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:10pt; font-weight:600;\">Download:</span></p></body></html>", None))
-        self.lb_download_2.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:10pt; font-weight:600;\">Upload:</span></p></body></html>", None))
-        self.lb_download_3.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:10pt; font-weight:600;\">Ping:</span></p></body></html>", None))
-        self.lb_download_4.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:10pt; font-weight:600;\">Servidor:</span></p></body></html>", None))
-        self.lb_download_5.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:10pt; font-weight:600;\">Operadora:</span></p></body></html>", None))
+        self.lb_download_nome.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:10pt; font-weight:600;\">Download:</span></p></body></html>", None))
+        self.lb_download_velocidade.setText("")
+        self.lb_upload_nome.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:10pt; font-weight:600;\">Upload:</span></p></body></html>", None))
+        self.lb_upload_velocidade.setText("")
+        self.lb_ping_nome.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:10pt; font-weight:600;\">Ping:</span></p></body></html>", None))
+        self.lb_ping_velocidade.setText("")
+        self.lb_servidor_nome.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:10pt; font-weight:600;\">Servidor:</span></p></body></html>", None))
+        self.lb_servidor_velocidade.setText("")
+        self.lb_operadora_nome.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:10pt; font-weight:600;\">Operadora:</span></p></body></html>", None))
+        self.lb_operadora_velocidade.setText("")
         self.label_8.setText("")
+        self.label.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:10pt; font-weight:600;\">Status:</span></p></body></html>", None))
+        self.lb_teste_de_velocidade_loading.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-weight:600;\"><br/></span><span style=\" font-size:10pt; font-weight:600;\">***</span></p></body></html>", None))
     # retranslateUi
 
