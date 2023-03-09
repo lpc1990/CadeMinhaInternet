@@ -17,12 +17,12 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(372, 542)
+        MainWindow.resize(363, 633)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.fr_status_da_internet = QFrame(self.centralwidget)
         self.fr_status_da_internet.setObjectName(u"fr_status_da_internet")
-        self.fr_status_da_internet.setGeometry(QRect(60, 10, 236, 150))
+        self.fr_status_da_internet.setGeometry(QRect(60, 10, 236, 191))
         self.fr_status_da_internet.setFrameShape(QFrame.StyledPanel)
         self.fr_status_da_internet.setFrameShadow(QFrame.Raised)
         self.verticalLayout_3 = QVBoxLayout(self.fr_status_da_internet)
@@ -55,12 +55,18 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_3.addWidget(self.btn_monitora_internet)
 
+        self.btn_parar_monitoramento = QPushButton(self.fr_status_da_internet)
+        self.btn_parar_monitoramento.setObjectName(u"btn_parar_monitoramento")
+        self.btn_parar_monitoramento.setEnabled(False)
+
+        self.verticalLayout_3.addWidget(self.btn_parar_monitoramento)
+
         self.lb_teste_de_velocidade = QLabel(self.centralwidget)
         self.lb_teste_de_velocidade.setObjectName(u"lb_teste_de_velocidade")
-        self.lb_teste_de_velocidade.setGeometry(QRect(10, 160, 341, 51))
+        self.lb_teste_de_velocidade.setGeometry(QRect(10, 240, 341, 51))
         self.layoutWidget = QWidget(self.centralwidget)
         self.layoutWidget.setObjectName(u"layoutWidget")
-        self.layoutWidget.setGeometry(QRect(40, 230, 311, 27))
+        self.layoutWidget.setGeometry(QRect(40, 300, 311, 27))
         self.horizontalLayout_8 = QHBoxLayout(self.layoutWidget)
         self.horizontalLayout_8.setObjectName(u"horizontalLayout_8")
         self.horizontalLayout_8.setContentsMargins(0, 0, 0, 0)
@@ -92,7 +98,7 @@ class Ui_MainWindow(object):
 
         self.layoutWidget1 = QWidget(self.centralwidget)
         self.layoutWidget1.setObjectName(u"layoutWidget1")
-        self.layoutWidget1.setGeometry(QRect(-10, 260, 381, 25))
+        self.layoutWidget1.setGeometry(QRect(-10, 330, 381, 25))
         self.horizontalLayout_9 = QHBoxLayout(self.layoutWidget1)
         self.horizontalLayout_9.setObjectName(u"horizontalLayout_9")
         self.horizontalLayout_9.setContentsMargins(0, 0, 0, 0)
@@ -124,7 +130,7 @@ class Ui_MainWindow(object):
 
         self.layoutWidget2 = QWidget(self.centralwidget)
         self.layoutWidget2.setObjectName(u"layoutWidget2")
-        self.layoutWidget2.setGeometry(QRect(0, 350, 361, 136))
+        self.layoutWidget2.setGeometry(QRect(0, 420, 361, 136))
         self.horizontalLayout_10 = QHBoxLayout(self.layoutWidget2)
         self.horizontalLayout_10.setObjectName(u"horizontalLayout_10")
         self.horizontalLayout_10.setContentsMargins(0, 0, 0, 0)
@@ -231,18 +237,18 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_10.addWidget(self.label_8)
 
-        self.widget = QWidget(self.centralwidget)
-        self.widget.setObjectName(u"widget")
-        self.widget.setGeometry(QRect(20, 300, 341, 31))
-        self.horizontalLayout_7 = QHBoxLayout(self.widget)
+        self.layoutWidget3 = QWidget(self.centralwidget)
+        self.layoutWidget3.setObjectName(u"layoutWidget3")
+        self.layoutWidget3.setGeometry(QRect(20, 370, 341, 31))
+        self.horizontalLayout_7 = QHBoxLayout(self.layoutWidget3)
         self.horizontalLayout_7.setObjectName(u"horizontalLayout_7")
         self.horizontalLayout_7.setContentsMargins(0, 0, 0, 0)
-        self.label = QLabel(self.widget)
+        self.label = QLabel(self.layoutWidget3)
         self.label.setObjectName(u"label")
 
         self.horizontalLayout_7.addWidget(self.label)
 
-        self.lb_teste_de_velocidade_loading = QLabel(self.widget)
+        self.lb_teste_de_velocidade_loading = QLabel(self.layoutWidget3)
         self.lb_teste_de_velocidade_loading.setObjectName(u"lb_teste_de_velocidade_loading")
         self.lb_teste_de_velocidade_loading.setMinimumSize(QSize(250, 0))
 
@@ -261,6 +267,7 @@ class Ui_MainWindow(object):
         self.img_status_da_internet.setText("")
         self.lb_online_offline.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:14pt; font-weight:600;\">Testando</span></p></body></html>", None))
         self.btn_monitora_internet.setText(QCoreApplication.translate("MainWindow", u"Monitorar Internet", None))
+        self.btn_parar_monitoramento.setText(QCoreApplication.translate("MainWindow", u"Parar Monitoramento", None))
         self.lb_teste_de_velocidade.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:24pt; font-weight:600;\">Teste de Velocidade</span></p></body></html>", None))
         self.label_3.setText("")
         self.lb_escolher_servidor.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p align=\"center\"><span style=\" font-size:10pt; font-weight:600;\">Escolher Servidor?</span></p></body></html>", None))

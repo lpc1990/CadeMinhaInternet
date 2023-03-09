@@ -24,12 +24,12 @@ class SpeedTestThread(QThread):
 
     def run(self):
         if self.param == None:
-            print("Sem parâmetro!")
+            # print("Sem parâmetro!")
             if self.func:
                 self.func()
         else:
             if self.func:
-                print("Com parâmetro!")
+                # print("Com parâmetro!")
                 self.func(self.param)
 
 
@@ -40,14 +40,82 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         self.setWindowTitle("Sistema de gerenciamento")
         self.check_internet_connection()
+        self.teste = True
 
-        self.obtendo_lista_servidores()
+
 
         # Se clicado, o botão de selecionar servidor chama uma função que libera o combobox e o botão ok pra testar
         # Com o servidor escolhido
         self.btn_selecionar_servidor.clicked.connect(self.enable_with_btn_seleciona_servidor)
+        self.btn_monitora_internet.clicked.connect(self.inicia_monitora_internet)
+        self.btn_parar_monitoramento.clicked.connect(self.parar_monitora_internet)
+
+
+    def inicia_monitora_internet(self):
+        self.btn_monitora_internet.setDisabled(True)
+        self.btn_parar_monitoramento.setEnabled(True)
+        ##############################################
+        self.bloco = SpeedTestThread()               #
+        self.bloco.set_function(self.monitora_internet)     #
+        self.bloco.start()                           #
+        ##############################################
+
+    def parar_monitora_internet(self):
+        self.btn_monitora_internet.setEnabled(True)
+        self.btn_parar_monitoramento.setDisabled(True)
+        self.teste = False
 
     def monitora_internet(self):
+        url = 'https://www.google.com/'
+        timeout = 5  # Tempo limite para tentar se conectar
+
+
+        self.internet_status = ""
+
+        try:
+            _ = requests.get(url, timeout=timeout)
+            # print("Internet Ok")
+            self.internet_status = "ok"
+        except requests.ConnectionError:
+            # print("Internet Ruim!")
+            self.internet_status = "not_ok"
+
+
+
+        if self.internet_status == "ok":
+            while self.teste:
+                test = requests.get(url, timeout=timeout)
+                if test.status_code == 200:
+                    print("Internet Ok!")
+                    time.sleep(2)
+                    pass
+                else:
+                    print("Internet caiu!")
+                    break
+                QApplication.processEvents()
+        else:
+            print("Entramos no else do sem internet")
+            if self.teste == True:
+                print("Entramos no IFFFF")
+                while self.teste:
+                    try:
+                        test = requests.get(url, timeout=timeout)
+                        if test.status_code == 200:
+                            print("Internet Voltou!!!")
+                            time.sleep(2)
+                            pass
+                    except:
+                        print("Internet fora!")
+                        time.sleep(2)
+
+                        pass
+
+        if self.teste == True:
+            self.monitora_internet()
+        else:
+            self.teste = True
+            pass
+
 
 
     # Função que roda a primeira vez o speedtest na chamada do programa
@@ -172,6 +240,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         try:
             _ = requests.get(url, timeout=timeout)
             print('Conexão de internet bem-sucedida')
+            self.obtendo_lista_servidores()
             self.img_status_da_internet.setPixmap('./images/sinal_verde.png')
             self.lb_online_offline.setText(QCoreApplication.translate("MainWindow",
                                                                       u"<html><head/><body><p align=\"center\"><span style=\" font-size:14pt; font-weight:600;\">Online</span></p></body></html>",
@@ -179,14 +248,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
             # Criando thread para exdcutar a função first_test
             ##############################################
-            self.bloco = SpeedTestThread()  #
-            self.bloco.set_function(self.first_test)  #
-            self.bloco.start()  #
+            self.bloco = SpeedTestThread()               #
+            self.bloco.set_function(self.first_test)     #
+            self.bloco.start()                           #
             ##############################################
             return True
 
         except requests.ConnectionError:
-            print('Sem conexão de internet disponível.')
+            # print('Sem conexão de internet disponível.')
             self.img_status_da_internet.setPixmap('./images/sinal_vermelho.png')
             self.lb_online_offline.setText(QCoreApplication.translate("MainWindow",
                                                                       u"<html><head/><body><p align=\"center\"><span style=\" font-size:14pt; font-weight:600;\">Offline</span></p></body></html>",

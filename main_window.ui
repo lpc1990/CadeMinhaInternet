@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>372</width>
-    <height>542</height>
+    <width>363</width>
+    <height>633</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,7 +20,7 @@
       <x>60</x>
       <y>10</y>
       <width>236</width>
-      <height>150</height>
+      <height>191</height>
      </rect>
     </property>
     <property name="frameShape">
@@ -71,13 +71,23 @@
        </property>
       </widget>
      </item>
+     <item>
+      <widget class="QPushButton" name="btn_parar_monitoramento">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="text">
+        <string>Parar Monitoramento</string>
+       </property>
+      </widget>
+     </item>
     </layout>
    </widget>
    <widget class="QLabel" name="lb_teste_de_velocidade">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>160</y>
+      <y>240</y>
       <width>341</width>
       <height>51</height>
      </rect>
@@ -90,7 +100,7 @@
     <property name="geometry">
      <rect>
       <x>40</x>
-      <y>230</y>
+      <y>300</y>
       <width>311</width>
       <height>27</height>
      </rect>
@@ -137,7 +147,7 @@
     <property name="geometry">
      <rect>
       <x>-10</x>
-      <y>260</y>
+      <y>330</y>
       <width>381</width>
       <height>25</height>
      </rect>
@@ -204,7 +214,7 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>350</y>
+      <y>420</y>
       <width>361</width>
       <height>136</height>
      </rect>
@@ -379,11 +389,11 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>300</y>
+      <y>370</y>
       <width>341</width>
       <height>31</height>
      </rect>
