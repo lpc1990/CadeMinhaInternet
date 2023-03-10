@@ -1,6 +1,8 @@
+from PySide2 import QtCore
 from PySide2.QtWidgets import QApplication, QMainWindow
 from PySide2.QtCore import QCoreApplication
 import requests
+import pygame
 import sys
 from main_window import Ui_MainWindow
 import speedtest
@@ -40,18 +42,18 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         self.setWindowTitle("Sistema de gerenciamento")
         self.check_internet_connection()
-        self.teste = True
 
 
 
         # Se clicado, o botão de selecionar servidor chama uma função que libera o combobox e o botão ok pra testar
         # Com o servidor escolhido
         self.btn_selecionar_servidor.clicked.connect(self.enable_with_btn_seleciona_servidor)
-        self.btn_monitora_internet.clicked.connect(self.inicia_monitora_internet)
         self.btn_parar_monitoramento.clicked.connect(self.parar_monitora_internet)
+        self.btn_monitora_internet.clicked.connect(self.inicia_monitora_internet)
 
 
     def inicia_monitora_internet(self):
+        self.teste = True
         self.btn_monitora_internet.setDisabled(True)
         self.btn_parar_monitoramento.setEnabled(True)
         ##############################################
@@ -83,32 +85,45 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
 
         if self.internet_status == "ok":
+            i = 0
             while self.teste:
-                test = requests.get(url, timeout=timeout)
-                if test.status_code == 200:
-                    print("Internet Ok!")
-                    time.sleep(2)
-                    pass
-                else:
+                try:
+                    test = requests.get(url, timeout=timeout)
+                    if test.status_code == 200:
+                        print("Internet Ok!")
+                        if i == 0:
+                            self.internet_online()
+                            i += 1
+                            pass
+                        time.sleep(2)
+                        pass
+                except:
+                    self.internet_offline()
                     print("Internet caiu!")
                     break
                 QApplication.processEvents()
-        else:
-            print("Entramos no else do sem internet")
-            if self.teste == True:
-                print("Entramos no IFFFF")
-                while self.teste:
-                    try:
-                        test = requests.get(url, timeout=timeout)
-                        if test.status_code == 200:
-                            print("Internet Voltou!!!")
-                            time.sleep(2)
-                            pass
-                    except:
-                        print("Internet fora!")
-                        time.sleep(2)
 
+        print("Entramos no else do sem internet")
+        if self.teste == True:
+            a = 0
+            print("Entramos no IFFFF")
+            while self.teste:
+                try:
+                    test = requests.get(url, timeout=timeout)
+                    if test.status_code == 200:
+                        if a == 1:
+                            self.internet_online()
+                            a = 0
+                        print("Internet Voltou!!!")
+                        time.sleep(2)
                         pass
+                except:
+                    if a == 0:
+                        self.internet_offline()
+                        a += 1
+                    print("Internet fora!")
+                    time.sleep(2)
+                    pass
 
         if self.teste == True:
             self.monitora_internet()
@@ -117,6 +132,34 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             pass
 
 
+
+    def definindo_sons(self):
+        # inicia a entrada de sons no programa
+        pygame.mixer.init()
+        self.musica = pygame.mixer.Channel(7)
+        self.musica_online = pygame.mixer.Sound("./sounds/internet_online.mp3")
+        self.musica_offline = pygame.mixer.Sound("./sounds/internet_offline.mp3")
+
+    def internet_offline(self):
+        self.definindo_sons()
+        text = self.lb_online_offline.text()
+        if "Online" or "Testando" in text:
+            self.musica.play(self.musica_offline, loops=0)
+            self.musica.set_volume(0.5)
+            self.lb_online_offline.setText(QCoreApplication.translate("MainWindow",
+                                                                      u"<html><head/><body><p align=\"center\"><span style=\" font-size:14pt; font-weight:600;\">Offline</span></p></body></html>",
+                                                                      None))
+            self.img_status_da_internet.setPixmap('./images/sinal_vermelho.png')
+    def internet_online(self):
+        self.definindo_sons()
+        text = self.lb_online_offline.text()
+        if "Offline" or "Testando" in text:
+            self.musica.play(self.musica_online, loops=0)
+            self.musica.set_volume(0.5)
+            self.lb_online_offline.setText(QCoreApplication.translate("MainWindow",
+                                                                      u"<html><head/><body><p align=\"center\"><span style=\" font-size:14pt; font-weight:600;\">Online</span></p></body></html>",
+                                                                      None))
+            self.img_status_da_internet.setPixmap('./images/sinal_verde.png')
 
     # Função que roda a primeira vez o speedtest na chamada do programa
     def first_test(self):
@@ -141,9 +184,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.lb_operadora_velocidade.setText(str(self.operadora_txt))
 
         self.btn_selecionar_servidor.setEnabled(True)
-        self.btn_monitora_internet.setEnabled(True)
 
         self.lb_teste_de_velocidade_loading.setText("Primeiro teste concluído!")
+        self.btn_monitora_internet.setEnabled(True)
 
     # Função para obter a lista dos servidores disponíveis para o teste de velocidade
     def obtendo_lista_servidores(self):
@@ -241,10 +284,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             _ = requests.get(url, timeout=timeout)
             print('Conexão de internet bem-sucedida')
             self.obtendo_lista_servidores()
-            self.img_status_da_internet.setPixmap('./images/sinal_verde.png')
-            self.lb_online_offline.setText(QCoreApplication.translate("MainWindow",
-                                                                      u"<html><head/><body><p align=\"center\"><span style=\" font-size:14pt; font-weight:600;\">Online</span></p></body></html>",
-                                                                      None))
+            self.internet_online()
 
             # Criando thread para exdcutar a função first_test
             ##############################################
@@ -256,11 +296,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         except requests.ConnectionError:
             # print('Sem conexão de internet disponível.')
-            self.img_status_da_internet.setPixmap('./images/sinal_vermelho.png')
-            self.lb_online_offline.setText(QCoreApplication.translate("MainWindow",
-                                                                      u"<html><head/><body><p align=\"center\"><span style=\" font-size:14pt; font-weight:600;\">Offline</span></p></body></html>",
-                                                                      None))
-            self.btn_monitora_internet.setEnabled(True)
+            self.internet_offline()
             return False
 
     # Função acionada pelo butão de selecionar servidor. Libera os o combobox com os servidores disponíveis e o botão ok
