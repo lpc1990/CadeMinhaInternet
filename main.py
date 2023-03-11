@@ -56,11 +56,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.teste = True
         self.btn_monitora_internet.setDisabled(True)
         self.btn_parar_monitoramento.setEnabled(True)
-        ##############################################
-        self.bloco = SpeedTestThread()               #
-        self.bloco.set_function(self.monitora_internet)     #
-        self.bloco.start()                           #
-        ##############################################
+        ##################################################
+        self.bloco2 = SpeedTestThread()                  #
+        self.bloco2.set_function(self.monitora_internet) #
+        self.bloco2.start()                              #
+        ##################################################
 
     def parar_monitora_internet(self):
         self.btn_monitora_internet.setEnabled(True)
@@ -187,6 +187,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         self.lb_teste_de_velocidade_loading.setText("Primeiro teste concluído!")
         self.btn_monitora_internet.setEnabled(True)
+        self.inicia_monitora_internet()
 
     # Função para obter a lista dos servidores disponíveis para o teste de velocidade
     def obtendo_lista_servidores(self):
